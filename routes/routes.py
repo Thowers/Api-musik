@@ -11,7 +11,7 @@ load_dotenv()
 router = APIRouter()
 
 @router.post("/noticias/{pagina}",status_code=status.HTTP_201_CREATED)
-async def crear_noticias():
+async def crear_noticias(pagina: int):
     nuevos = scrap()
     if nuevos is None:
         raise HTTPException(status_code=500, detail="Error al insertar en la base de datos")
