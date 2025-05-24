@@ -3,6 +3,10 @@ from typing import List
 from models.models import Noticias
 from services.services import scrap, borrar
 from db.database import database
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 router = APIRouter()
 
@@ -15,7 +19,7 @@ async def create_noticias():
 
 @router.get("/noticias",response_model=List[Noticias])
 async def read_noticias():
-    col = database.get_collection("noticias")
+    col = database.get_collection(os.getenv("COLLECTION"))
     docs = list(col.find({}, {"_id": False}))
     return docs
 

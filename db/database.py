@@ -1,13 +1,16 @@
 from pymongo import MongoClient, ASCENDING
+import os  
+from dotenv import load_dotenv 
 
+load_dotenv()
 class Database:
     def __init__(self):
-        self.client = MongoClient("mongodb+srv://towers1904:nikolash190499@clusterthowers.ixmyw.mongodb.net/?retryWrites=true&w=majority&appName=ClusterThowers", tlsallowinvalidcertificates=True)
-        self.db = self.client["musik"]
+        self.client = MongoClient(os.getenv("MONGO"), tlsallowinvalidcertificates=True)
+        self.db = self.client[os.getenv("DB")]
         self._ensure_indexes()
 
     def _ensure_indexes(self):
-        col = self.db["noticias"]
+        col = self.db[os.getenv("COLLECTION")]
         col.create_index([("link", ASCENDING)], unique=True)
 
     def get_collection(self, collection):
