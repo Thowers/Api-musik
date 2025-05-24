@@ -3,8 +3,11 @@ from models.models import Noticias
 import requests
 from bs4 import BeautifulSoup
 
-def scrap():
-    url = "https://www.billboard.com/c/espanol/noticias/page/2/"
+def scrap(pagina=1):
+    if pagina == 1:
+        url = "https://www.billboard.com/c/espanol/noticias/"
+    else:
+        url = f"https://www.billboard.com/c/espanol/noticias/page/{pagina}/"
     headers = {'User-Agent': (
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
             'AppleWebKit/537.36 (KHTML, like Gecko) '
