@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 def scrap():
-    url = "https://www.billboard.com/c/espanol/noticias/"
+    url = "https://www.billboard.com/c/espanol/noticias/page/2/"
     headers = {'User-Agent': (
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
             'AppleWebKit/537.36 (KHTML, like Gecko) '
