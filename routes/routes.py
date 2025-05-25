@@ -36,6 +36,6 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()):
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-@router.delete("/noticias")
-def eliminar_noticias(current_user: str = Depends(get_current_user)):
-    return borrar()
+@router.delete("/noticias/{noticia_id}")
+def eliminar_noticias(noticia_id: str,current_user: str = Depends(get_current_user)):
+    return borrar(noticia_id)
