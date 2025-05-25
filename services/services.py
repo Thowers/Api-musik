@@ -37,7 +37,7 @@ def scrap(pagina=1):
         except Exception as e:
             return {"error": str(e)}
     else:
-        return {"message": "No news found to insert."}
+        return {"mensaje": "No hay noticias a insertar."}
 
 
 def borrar():

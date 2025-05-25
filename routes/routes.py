@@ -1,10 +1,13 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status,Depends
 from typing import List
 from models.models import Noticias
 from services.services import scrap, borrar
 from db.database import database
 import os
 from dotenv import load_dotenv
+from fastapi.security import OAuth2PasswordRequestForm
+from services.auth import authenticate_user, create_access_token, get_current_user
+from datetime import timedelta
 
 load_dotenv()
 
@@ -23,6 +26,16 @@ async def leer_noticias():
     docs = list(col.find({}, {"_id": False}))
     return docs
 
+@router.post("/login")
+def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    if not authenticate_user(form_data.username, form_data.password):
+        raise HTTPException(status_code=400, detail="Credenciales incorrectas")
+    access_token = create_access_token(
+        data={"sub": form_data.username},
+        expires_delta=timedelta(minutes=30)
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
+
 @router.delete("/noticias")
-def eliminar_noticias():
+def eliminar_noticias(current_user: str = Depends(get_current_user)):
     return borrar()
